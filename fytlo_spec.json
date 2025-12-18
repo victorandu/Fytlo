@@ -1,0 +1,351 @@
+{
+  "project": {
+    "name": "Fytlo",
+    "version": "0.1.0",
+    "description": "iOS-first virtual try-on MVP. Full-body photo required. Outfit builder with Top + Bottom slots. Users can swap one garment per generation; can generate with only top or only bottom."
+  },
+  "mvp_rules": {
+    "platform": "ios",
+    "requires_full_body_photo": true,
+    "full_body_definition": "head_to_shoes_front_facing",
+    "outfit_builder": {
+      "slots": [
+        "top",
+        "bottom"
+      ],
+      "one_swap_per_generation": true,
+      "allow_single_slot_generation": true,
+      "notes": "Users can swap only one slot (top OR bottom) per generation attempt. Missing slot stays as-is from the original body photo."
+    }
+  },
+  "swimlanes": [
+    "User/iOS UI",
+    "On-Device Checks",
+    "Backend API",
+    "Storage",
+    "Try-On Model Provider"
+  ],
+  "nodes": [
+    {
+      "id": "WELCOME_UI",
+      "lane": "User/iOS UI",
+      "label": "Welcome"
+    },
+    {
+      "id": "BODY_UI",
+      "lane": "User/iOS UI",
+      "label": "Body Photo (Full Body Required)"
+    },
+    {
+      "id": "OUTFIT_UI",
+      "lane": "User/iOS UI",
+      "label": "Outfit Builder (Top + Bottom Slots)"
+    },
+    {
+      "id": "GARMENT_UI",
+      "lane": "User/iOS UI",
+      "label": "Upload Garment (Select Slot: Top or Bottom)"
+    },
+    {
+      "id": "LOADING_UI",
+      "lane": "User/iOS UI",
+      "label": "Generating (Loading)"
+    },
+    {
+      "id": "RESULT_UI",
+      "lane": "User/iOS UI",
+      "label": "Preview Result + Save"
+    },
+    {
+      "id": "CHECKS_BODY",
+      "lane": "On-Device Checks",
+      "label": "Body Checks: Full-body framing (block), Blur (warn/block), Background (warn)"
+    },
+    {
+      "id": "CHECKS_GARMENT",
+      "lane": "On-Device Checks",
+      "label": "Garment Checks: Background (block), Coverage (warn/block), Blur (warn/block)"
+    },
+    {
+      "id": "API_UPLOAD_BODY",
+      "lane": "Backend API",
+      "label": "POST /v1/upload-body"
+    },
+    {
+      "id": "API_UPLOAD_GARMENT",
+      "lane": "Backend API",
+      "label": "POST /v1/upload-garment"
+    },
+    {
+      "id": "API_TRYON",
+      "lane": "Backend API",
+      "label": "POST /v1/try-on"
+    },
+    {
+      "id": "API_TRYON_STATUS",
+      "lane": "Backend API",
+      "label": "GET /v1/try-on/{attemptId}"
+    },
+    {
+      "id": "STORE_BODY",
+      "lane": "Storage",
+      "label": "Store body image (S3/Supabase)"
+    },
+    {
+      "id": "STORE_GARMENT",
+      "lane": "Storage",
+      "label": "Store garment original + prepared artifacts (mask/cutout/preview)"
+    },
+    {
+      "id": "STORE_RESULT",
+      "lane": "Storage",
+      "label": "Store result image"
+    },
+    {
+      "id": "MODEL_TRYON",
+      "lane": "Try-On Model Provider",
+      "label": "Try-on inference (segmentation/pose/warp/synthesis)"
+    }
+  ],
+  "edges": [
+    [
+      "WELCOME_UI",
+      "BODY_UI",
+      "start"
+    ],
+    [
+      "BODY_UI",
+      "CHECKS_BODY",
+      "select photo"
+    ],
+    [
+      "CHECKS_BODY",
+      "API_UPLOAD_BODY",
+      "pass -> upload"
+    ],
+    [
+      "API_UPLOAD_BODY",
+      "STORE_BODY",
+      "store"
+    ],
+    [
+      "STORE_BODY",
+      "OUTFIT_UI",
+      "sessionId returned"
+    ],
+    [
+      "OUTFIT_UI",
+      "GARMENT_UI",
+      "tap slot"
+    ],
+    [
+      "GARMENT_UI",
+      "CHECKS_GARMENT",
+      "select garment"
+    ],
+    [
+      "CHECKS_GARMENT",
+      "API_UPLOAD_GARMENT",
+      "pass -> upload"
+    ],
+    [
+      "API_UPLOAD_GARMENT",
+      "STORE_GARMENT",
+      "store + prepare"
+    ],
+    [
+      "STORE_GARMENT",
+      "OUTFIT_UI",
+      "garmentId returned"
+    ],
+    [
+      "OUTFIT_UI",
+      "API_TRYON",
+      "Generate (one slot changed)"
+    ],
+    [
+      "API_TRYON",
+      "LOADING_UI",
+      "status processing"
+    ],
+    [
+      "API_TRYON",
+      "MODEL_TRYON",
+      "call provider"
+    ],
+    [
+      "MODEL_TRYON",
+      "STORE_RESULT",
+      "result"
+    ],
+    [
+      "STORE_RESULT",
+      "API_TRYON_STATUS",
+      "status success"
+    ],
+    [
+      "API_TRYON_STATUS",
+      "RESULT_UI",
+      "resultImageUrl"
+    ],
+    [
+      "RESULT_UI",
+      "OUTFIT_UI",
+      "swap top OR bottom"
+    ]
+  ],
+  "apis": {
+    "vto": {
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/v1/upload-body",
+          "content_type": "multipart/form-data",
+          "req": {
+            "body_image": "file"
+          },
+          "res": {
+            "requestId": "string",
+            "session": {
+              "sessionId": "string",
+              "bodyImageUrl": "string",
+              "checks": {
+                "fullBodyPassed": "bool",
+                "blurScore": "number",
+                "backgroundScore": "number"
+              }
+            }
+          },
+          "errors": [
+            "BODY_NOT_FULL",
+            "BODY_TOO_BLURRY"
+          ]
+        },
+        {
+          "method": "POST",
+          "path": "/v1/upload-garment",
+          "content_type": "multipart/form-data",
+          "req": {
+            "sessionId": "string",
+            "garmentType": "top|bottom",
+            "garment_image": "file"
+          },
+          "res": {
+            "requestId": "string",
+            "garment": {
+              "garmentId": "string",
+              "garmentType": "top|bottom",
+              "originalImageUrl": "string",
+              "maskUrl": "string",
+              "cutoutUrl": "string",
+              "previewUrl": "string",
+              "checks": {
+                "blurScore": "number",
+                "backgroundScore": "number",
+                "coverageRatio": "number"
+              }
+            }
+          },
+          "errors": [
+            "SESSION_NOT_FOUND",
+            "GARMENT_BG_BUSY",
+            "GARMENT_TOO_SMALL",
+            "GARMENT_TOO_BLURRY"
+          ]
+        },
+        {
+          "method": "POST",
+          "path": "/v1/try-on",
+          "content_type": "application/json",
+          "req": {
+            "sessionId": "string",
+            "changedSlot": "top|bottom",
+            "topGarmentId": "string?",
+            "bottomGarmentId": "string?"
+          },
+          "res": {
+            "requestId": "string",
+            "attempt": {
+              "attemptId": "string",
+              "status": "processing|success",
+              "resultImageUrl": "string?"
+            }
+          },
+          "errors": [
+            "ONE_SWAP_ONLY",
+            "GARMENT_TYPE_MISMATCH",
+            "TRYON_FAILED"
+          ]
+        },
+        {
+          "method": "GET",
+          "path": "/v1/try-on/{attemptId}",
+          "content_type": "application/json",
+          "req": {},
+          "res": {
+            "requestId": "string",
+            "attempt": {
+              "attemptId": "string",
+              "status": "processing|success|failed",
+              "progress": "number?",
+              "resultImageUrl": "string?",
+              "error": {
+                "code": "string",
+                "message": "string"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "data_models": {
+    "session": {
+      "sessionId": "string",
+      "bodyImageUrl": "string",
+      "checks": {
+        "fullBodyPassed": "bool",
+        "blurScore": "number",
+        "backgroundScore": "number"
+      },
+      "created_at": "string"
+    },
+    "garment": {
+      "garmentId": "string",
+      "garmentType": "top|bottom",
+      "originalImageUrl": "string",
+      "maskUrl": "string",
+      "cutoutUrl": "string",
+      "previewUrl": "string",
+      "checks": {
+        "blurScore": "number",
+        "backgroundScore": "number",
+        "coverageRatio": "number"
+      },
+      "created_at": "string"
+    },
+    "attempt": {
+      "attemptId": "string",
+      "sessionId": "string",
+      "changedSlot": "top|bottom",
+      "topGarmentId": "string?",
+      "bottomGarmentId": "string?",
+      "status": "processing|success|failed",
+      "resultImageUrl": "string?",
+      "error": {
+        "code": "string?",
+        "message": "string?"
+      },
+      "created_at": "string"
+    }
+  },
+  "permissions": {
+    "ios": {
+      "camera": "NSCameraUsageDescription",
+      "photos_add": "NSPhotoLibraryAddUsageDescription",
+      "photos_read": "NSPhotoLibraryUsageDescription",
+      "notifications": "UNUserNotificationCenter requestAuthorization"
+    }
+  },
+  "created_at": "2025-12-17T00:00:00Z"
+}
