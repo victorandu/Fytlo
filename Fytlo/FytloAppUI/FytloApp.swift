@@ -11,7 +11,7 @@ import SwiftUI
 struct FytloApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppRouter()
         }
     }
 }

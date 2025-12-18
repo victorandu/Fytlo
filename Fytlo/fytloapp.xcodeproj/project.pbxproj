@@ -24,15 +24,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C63FE3C12EF3833E0058BA2B /* Fytlo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fytlo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C63FE3CE2EF383400058BA2B /* FytloTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FytloTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C63FE3D82EF383400058BA2B /* FytloUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FytloUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C63FE3C12EF3833E0058BA2B /* Fytlo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Fytlo.app; path = "/Users/vicjrandu/Desktop/Fytlo/Fytlo/build/Debug-iphoneos/Fytlo.app"; sourceTree = "<absolute>"; };
+		C63FE3CE2EF383400058BA2B /* FytloTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = FytloTests.xctest; path = "/Users/vicjrandu/Desktop/Fytlo/Fytlo/build/Debug-iphoneos/Fytlo.app/PlugIns/FytloTests.xctest"; sourceTree = "<absolute>"; };
+		C63FE3D82EF383400058BA2B /* FytloUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = FytloUITests.xctest; path = "/Users/vicjrandu/Desktop/Fytlo/Fytlo/build/Debug-iphoneos/FytloUITests-Runner.app/PlugIns/FytloUITests.xctest"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		C63FE3C32EF3833E0058BA2B /* Fytlo */ = {
+		C63FE3C32EF3833E0058BA2B /* FytloAppUI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Fytlo;
+			path = FytloAppUI;
 			sourceTree = "<group>";
 		};
 		C63FE3D12EF383400058BA2B /* FytloTests */ = {
@@ -43,6 +43,26 @@
 		C63FE3DB2EF383400058BA2B /* FytloUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = FytloUITests;
+			sourceTree = "<group>";
+		};
+		C63FE40E2EF38DF80058BA2B /* Components */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Components;
+			sourceTree = "<group>";
+		};
+		C63FE40F2EF38E120058BA2B /* ViewModels */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		C63FE4102EF39CDB0058BA2B /* Utilities */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		C63FE41E2EF3AF270058BA2B /* Views */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,21 +95,14 @@
 		C63FE3B82EF3833E0058BA2B = {
 			isa = PBXGroup;
 			children = (
-				C63FE3C32EF3833E0058BA2B /* Fytlo */,
+				C63FE3C32EF3833E0058BA2B /* FytloAppUI */,
+				C63FE41E2EF3AF270058BA2B /* Views */,
+				C63FE40E2EF38DF80058BA2B /* Components */,
+				C63FE40F2EF38E120058BA2B /* ViewModels */,
+				C63FE4102EF39CDB0058BA2B /* Utilities */,
 				C63FE3D12EF383400058BA2B /* FytloTests */,
 				C63FE3DB2EF383400058BA2B /* FytloUITests */,
-				C63FE3C22EF3833E0058BA2B /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		C63FE3C22EF3833E0058BA2B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C63FE3C12EF3833E0058BA2B /* Fytlo.app */,
-				C63FE3CE2EF383400058BA2B /* FytloTests.xctest */,
-				C63FE3D82EF383400058BA2B /* FytloUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -108,7 +121,11 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				C63FE3C32EF3833E0058BA2B /* Fytlo */,
+				C63FE3C32EF3833E0058BA2B /* FytloAppUI */,
+				C63FE40E2EF38DF80058BA2B /* Components */,
+				C63FE40F2EF38E120058BA2B /* ViewModels */,
+				C63FE4102EF39CDB0058BA2B /* Utilities */,
+				C63FE41E2EF3AF270058BA2B /* Views */,
 			);
 			name = Fytlo;
 			packageProductDependencies = (
@@ -186,7 +203,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C63FE3BC2EF3833E0058BA2B /* Build configuration list for PBXProject "Fytlo" */;
+			buildConfigurationList = C63FE3BC2EF3833E0058BA2B /* Build configuration list for PBXProject "fytloapp" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -196,7 +213,7 @@
 			mainGroup = C63FE3B82EF3833E0058BA2B;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = C63FE3C22EF3833E0058BA2B /* Products */;
+			productRefGroup = C63FE3B82EF3833E0058BA2B;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -541,7 +558,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C63FE3BC2EF3833E0058BA2B /* Build configuration list for PBXProject "Fytlo" */ = {
+		C63FE3BC2EF3833E0058BA2B /* Build configuration list for PBXProject "fytloapp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C63FE3E02EF383400058BA2B /* Debug */,
