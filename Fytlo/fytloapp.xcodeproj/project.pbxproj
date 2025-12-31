@@ -24,9 +24,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C63FE4322EFA54EB0058BA2B /* Fytlo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Fytlo.app; path = "/Users/vicjrandu/Desktop/Fytlo/Fytlo/build/Debug-iphoneos/Fytlo.app"; sourceTree = "<absolute>"; };
-		C63FE4332EFA54EB0058BA2B /* FytloTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = FytloTests.xctest; path = "/Users/vicjrandu/Desktop/Fytlo/Fytlo/build/Debug-iphoneos/Fytlo.app/PlugIns/FytloTests.xctest"; sourceTree = "<absolute>"; };
-		C63FE4342EFA54EB0058BA2B /* FytloUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = FytloUITests.xctest; path = "/Users/vicjrandu/Desktop/Fytlo/Fytlo/build/Debug-iphoneos/FytloUITests-Runner.app/PlugIns/FytloUITests.xctest"; sourceTree = "<absolute>"; };
+		C6EA62A52EFF65330080E41D /* Fytlo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Fytlo.app; path = "/Users/vicjrandu/Desktop/Fytlo/Fytlo/build/Debug-iphoneos/Fytlo.app"; sourceTree = "<absolute>"; };
+		C6EA62A62EFF65330080E41D /* FytloTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = FytloTests.xctest; path = "/Users/vicjrandu/Desktop/Fytlo/Fytlo/build/Debug-iphoneos/Fytlo.app/PlugIns/FytloTests.xctest"; sourceTree = "<absolute>"; };
+		C6EA62A72EFF65330080E41D /* FytloUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = FytloUITests.xctest; path = "/Users/vicjrandu/Desktop/Fytlo/Fytlo/build/Debug-iphoneos/FytloUITests-Runner.app/PlugIns/FytloUITests.xctest"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -138,7 +138,7 @@
 			packageProductDependencies = (
 			);
 			productName = Fytlo;
-			productReference = C63FE4322EFA54EB0058BA2B /* Fytlo.app */;
+			productReference = C6EA62A52EFF65330080E41D /* Fytlo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C63FE3CD2EF383400058BA2B /* FytloTests */ = {
@@ -161,7 +161,7 @@
 			packageProductDependencies = (
 			);
 			productName = FytloTests;
-			productReference = C63FE4332EFA54EB0058BA2B /* FytloTests.xctest */;
+			productReference = C6EA62A62EFF65330080E41D /* FytloTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		C63FE3D72EF383400058BA2B /* FytloUITests */ = {
@@ -184,7 +184,7 @@
 			packageProductDependencies = (
 			);
 			productName = FytloUITests;
-			productReference = C63FE4342EFA54EB0058BA2B /* FytloUITests.xctest */;
+			productReference = C6EA62A72EFF65330080E41D /* FytloUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
